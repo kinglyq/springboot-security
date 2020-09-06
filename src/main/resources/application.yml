@@ -1,1 +1,35 @@
+server:
+  port: 9701
+  servlet:
+    context-path: /shield
+    encoding:
+      charset: utf-8
+      force: on
+      enabled: on
 
+spring:
+  datasource:
+    url: jdbc:h2:mem:dbtest;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    platform: h2
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+  h2:
+    console:
+      enabled: on
+      settings:
+        web-allow-others: on
+      path: /h2
+
+  security:
+    user:
+      name: user
+      password: user
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    call-setters-on-nulls: on
+    map-underscore-to-camel-case: on
