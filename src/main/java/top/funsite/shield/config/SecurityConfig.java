@@ -1,11 +1,10 @@
-package top.funsite.shield;
+package top.funsite.shield.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,11 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers(permits).permitAll()
                 .anyRequest().authenticated())
                 .headers(header -> {
-                    // 防止打不开h2控制台页面
-                    header.frameOptions().disable();
+                    // 防止打不开iframe页面
+                    header.frameOptions().sameOrigin();
                 })
                 // 禁用csrf
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(csrf -> csrf.ignoringAntMatchers("/h2/**"));
     }
 
     /**
